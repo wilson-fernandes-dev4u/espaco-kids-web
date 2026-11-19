@@ -27,6 +27,7 @@ class StatCard extends StatelessWidget {
     final tint = color ?? scheme.primary;
 
     return PatternCard(
+      stacked: true,
       child: InkWell(
         onTap: onTap,
         borderRadius: BorderRadius.circular(AppSpacing.cardRadius),

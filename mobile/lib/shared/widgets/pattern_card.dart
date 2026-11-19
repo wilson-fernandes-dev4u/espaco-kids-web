@@ -9,6 +9,7 @@ class PatternCard extends StatelessWidget {
     required this.child,
     this.margin,
     this.color,
+    this.stacked = false,
   });
 
   final Widget child;
@@ -16,6 +17,10 @@ class PatternCard extends StatelessWidget {
 
   /// Cor de fundo do cartão (o padrão é a do tema).
   final Color? color;
+
+  /// Bolas sobrepostas no canto inferior direito (cartões de número). O padrão
+  /// são as bolas nos cantos superior direito e inferior esquerdo.
+  final bool stacked;
 
   @override
   Widget build(BuildContext context) {
@@ -35,6 +40,7 @@ class PatternCard extends StatelessWidget {
                   primary: scheme.primary,
                   secondary: scheme.secondary,
                   opacity: isDark ? 0.10 : 0.12,
+                  stacked: stacked,
                 ),
               ),
             ),
@@ -53,14 +59,29 @@ class _CirclesPainter extends CustomPainter {
     required this.primary,
     required this.secondary,
     required this.opacity,
+    this.stacked = false,
   });
 
   final Color primary;
   final Color secondary;
   final double opacity;
+  final bool stacked;
 
   @override
   void paint(Canvas canvas, Size size) {
+    if (stacked) {
+      canvas.drawCircle(
+        Offset(size.width - 8, size.height - 4),
+        44,
+        Paint()..color = primary.withValues(alpha: opacity),
+      );
+      canvas.drawCircle(
+        Offset(size.width - 62, size.height + 6),
+        28,
+        Paint()..color = secondary.withValues(alpha: opacity),
+      );
+      return;
+    }
     // Mesma disposição dos cards do Reportask, com bolas: uma grande saindo
     // pelo canto superior direito e uma menor pelo canto inferior esquerdo.
     canvas.drawCircle(
@@ -79,5 +100,6 @@ class _CirclesPainter extends CustomPainter {
   bool shouldRepaint(_CirclesPainter old) =>
       old.primary != primary ||
       old.secondary != secondary ||
-      old.opacity != opacity;
+      old.opacity != opacity ||
+      old.stacked != stacked;
 }

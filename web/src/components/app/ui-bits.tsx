@@ -73,7 +73,7 @@ export function StatCard({
   tone?: Tone;
 }) {
   return (
-    <div className="card-surface p-4">
+    <div className="card-surface card-bubbles-stack p-4">
       <div className="flex items-start justify-between gap-3">
         <div className="min-w-0">
           <p className="text-xs font-medium text-muted-foreground">{label}</p>

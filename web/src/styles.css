@@ -113,16 +113,33 @@
 /* Padrão de bolas dos cartões: duas bolas, uma saindo pelo canto superior direito e outra pelo inferior esquerdo (como os cartões do Reportask), desenhadas no próprio fundo (sem
    elemento extra e sem cortar nada que abra para fora do cartão), como o PatternCard do app. */
 @utility card-circles {
-  background-image:
+  background-image: var(
+    --card-bubbles,
     radial-gradient(
-      circle at calc(100% - 24px) 16px,
-      color-mix(in oklab, var(--color-primary) 9%, transparent) 0 56px,
-      transparent 57px
+        circle at calc(100% - 24px) 16px,
+        color-mix(in oklab, var(--color-primary) 9%, transparent) 0 56px,
+        transparent 57px
+      ),
+      radial-gradient(
+        circle at 16px 100%,
+        color-mix(in oklab, var(--color-primary) 6%, transparent) 0 40px,
+        transparent 41px
+      )
+  );
+}
+
+/* Cartões de número (StatCard): as duas bolas sobrepostas no canto inferior direito. */
+@utility card-bubbles-stack {
+  --card-bubbles:
+    radial-gradient(
+      circle at calc(100% - 8px) calc(100% - 4px),
+      color-mix(in oklab, var(--color-primary) 10%, transparent) 0 44px,
+      transparent 45px
     ),
     radial-gradient(
-      circle at 16px 100%,
-      color-mix(in oklab, var(--color-primary) 6%, transparent) 0 40px,
-      transparent 41px
+      circle at calc(100% - 62px) calc(100% + 6px),
+      color-mix(in oklab, var(--color-primary) 7%, transparent) 0 28px,
+      transparent 29px
     );
 }
 
@@ -131,17 +148,19 @@
   border: 1px solid var(--color-border);
   border-radius: var(--radius-xl);
   box-shadow: var(--shadow-card);
-  background-image:
+  background-image: var(
+    --card-bubbles,
     radial-gradient(
-      circle at calc(100% - 24px) 16px,
-      color-mix(in oklab, var(--color-primary) 9%, transparent) 0 56px,
-      transparent 57px
-    ),
-    radial-gradient(
-      circle at 16px 100%,
-      color-mix(in oklab, var(--color-primary) 6%, transparent) 0 40px,
-      transparent 41px
-    );
+        circle at calc(100% - 24px) 16px,
+        color-mix(in oklab, var(--color-primary) 9%, transparent) 0 56px,
+        transparent 57px
+      ),
+      radial-gradient(
+        circle at 16px 100%,
+        color-mix(in oklab, var(--color-primary) 6%, transparent) 0 40px,
+        transparent 41px
+      )
+  );
 }
 
 @media print {
