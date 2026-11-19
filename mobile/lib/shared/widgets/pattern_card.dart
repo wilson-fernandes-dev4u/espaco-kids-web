@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-/// [Card] com um detalhe decorativo (círculos suaves) no canto inferior
-/// direito, usado nos cards do app para dar identidade visual sem depender
+/// [Card] com um detalhe decorativo (círculos suaves) nos cantos superior
+/// direito e inferior esquerdo, usado nos cards do app para dar identidade visual sem depender
 /// de imagens.
 class PatternCard extends StatelessWidget {
   const PatternCard({
@@ -61,15 +61,17 @@ class _CirclesPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
+    // Mesma disposição dos cards do Reportask, com bolas: uma grande saindo
+    // pelo canto superior direito e uma menor pelo canto inferior esquerdo.
     canvas.drawCircle(
-      Offset(size.width - 8, size.height - 4),
-      44,
+      Offset(size.width - 24, 16),
+      56,
       Paint()..color = primary.withValues(alpha: opacity),
     );
     canvas.drawCircle(
-      Offset(size.width - 62, size.height + 6),
-      28,
-      Paint()..color = secondary.withValues(alpha: opacity),
+      Offset(16, size.height),
+      40,
+      Paint()..color = secondary.withValues(alpha: opacity * 0.7),
     );
   }
 
