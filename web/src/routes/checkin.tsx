@@ -1,9 +1,9 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { LogoLoader } from "@/components/app/app-logo";
 import { useMemo, useState } from "react";
 import {
   AlertTriangle,
   ArrowLeft,
-  Loader2,
   LogIn,
   LogOut,
   Printer,
@@ -115,9 +115,7 @@ function CheckPage() {
       map.set(k, [...(map.get(k) ?? []), c]);
     }
     return [...map.entries()]
-      .sort(
-        ([a], [b]) => (order.get(a) ?? 999) - (order.get(b) ?? 999),
-      )
+      .sort(([a], [b]) => (order.get(a) ?? 999) - (order.get(b) ?? 999))
       .map(([classId, kids]) => ({
         classId,
         name: state.classes.find((x) => x.id === classId)?.name ?? "Sem turma",
@@ -274,76 +272,78 @@ function CheckPage() {
         : undefined;
     return (
       <>
-      <div className="no-print mx-auto max-w-lg">
-        <div className="card-surface p-8 text-center">
-          <SuccessAnimation />
-          <h1 className="mt-2 text-2xl font-bold">
-            {done.kind === "in" ? "Entrada registrada" : "Saída registrada"}
-          </h1>
-          <div className="mt-4 flex items-center justify-center gap-3">
-            <KidAvatar child={done.child} size="md" />
-            <div className="text-left">
-              <p className="font-semibold">{done.child.fullName}</p>
-              <p className="text-sm text-muted-foreground">
-                {cls(done.child)?.name} • {done.child.code}
-              </p>
-            </div>
-          </div>
-          <p className="mt-4 text-sm text-muted-foreground">
-            {done.kind === "in" ? "Entregue por" : "Retirada por"}{" "}
-            <strong className="text-foreground">{done.by}</strong> às{" "}
-            {time(done.at)}
-          </p>
-          {done.kind === "in" && (
-            <div className="mt-6 rounded-xl border bg-muted/40 p-4">
-              {doneBadge ? (
-                <>
-                  <p className="font-semibold">Deseja imprimir o crachá?</p>
-                  <div className="mt-3 grid grid-cols-2 gap-3">
-                    <Button size="lg" className="h-12" onClick={printBadge}>
-                      <Printer /> Imprimir crachá
-                    </Button>
-                    <Button
-                      size="lg"
-                      variant="outline"
-                      className="h-12"
-                      onClick={reset}
-                    >
-                      Não imprimir
-                    </Button>
-                  </div>
-                </>
-              ) : (
+        <div className="no-print mx-auto max-w-lg">
+          <div className="card-surface p-8 text-center">
+            <SuccessAnimation />
+            <h1 className="mt-2 text-2xl font-bold">
+              {done.kind === "in" ? "Entrada registrada" : "Saída registrada"}
+            </h1>
+            <div className="mt-4 flex items-center justify-center gap-3">
+              <KidAvatar child={done.child} size="md" />
+              <div className="text-left">
+                <p className="font-semibold">{done.child.fullName}</p>
                 <p className="text-sm text-muted-foreground">
-                  Esta criança não tem crachá ativo. Emita em{" "}
-                  <strong>Crachás</strong> para poder imprimir.
+                  {cls(done.child)?.name} • {done.child.code}
                 </p>
-              )}
+              </div>
             </div>
-          )}
-          <Button
-            size="lg"
-            variant={done.kind === "in" && doneBadge ? "ghost" : "default"}
-            className="mt-4 h-12 w-full"
-            onClick={reset}
-          >
-            {done.kind === "in" ? "Próxima criança" : "Concluir"}
-          </Button>
-        </div>
-      </div>
-      {printing && doneBadge && (
-        <div className="print-only">
-          <div className="print-sheet">
-            <BadgeCard
-              child={done.child}
-              badge={doneBadge}
-              cls={cls(done.child)}
-              family={state.families.find((f) => f.id === done.child.familyId)}
-              settings={state.settings}
-            />
+            <p className="mt-4 text-sm text-muted-foreground">
+              {done.kind === "in" ? "Entregue por" : "Retirada por"}{" "}
+              <strong className="text-foreground">{done.by}</strong> às{" "}
+              {time(done.at)}
+            </p>
+            {done.kind === "in" && (
+              <div className="mt-6 rounded-xl border bg-muted/40 p-4">
+                {doneBadge ? (
+                  <>
+                    <p className="font-semibold">Deseja imprimir o crachá?</p>
+                    <div className="mt-3 grid grid-cols-2 gap-3">
+                      <Button size="lg" className="h-12" onClick={printBadge}>
+                        <Printer /> Imprimir crachá
+                      </Button>
+                      <Button
+                        size="lg"
+                        variant="outline"
+                        className="h-12"
+                        onClick={reset}
+                      >
+                        Não imprimir
+                      </Button>
+                    </div>
+                  </>
+                ) : (
+                  <p className="text-sm text-muted-foreground">
+                    Esta criança não tem crachá ativo. Emita em{" "}
+                    <strong>Crachás</strong> para poder imprimir.
+                  </p>
+                )}
+              </div>
+            )}
+            <Button
+              size="lg"
+              variant={done.kind === "in" && doneBadge ? "ghost" : "default"}
+              className="mt-4 h-12 w-full"
+              onClick={reset}
+            >
+              {done.kind === "in" ? "Próxima criança" : "Concluir"}
+            </Button>
           </div>
         </div>
-      )}
+        {printing && doneBadge && (
+          <div className="print-only">
+            <div className="print-sheet">
+              <BadgeCard
+                child={done.child}
+                badge={doneBadge}
+                cls={cls(done.child)}
+                family={state.families.find(
+                  (f) => f.id === done.child.familyId,
+                )}
+                settings={state.settings}
+              />
+            </div>
+          </div>
+        )}
       </>
     );
   }
@@ -552,7 +552,7 @@ function CheckPage() {
                     }
                     onClick={confirmIn}
                   >
-                    {busy && <Loader2 className="animate-spin" />} Confirmar
+                    {busy && <LogoLoader light className="size-6" />} Confirmar
                     entrada
                   </Button>
                 </>
@@ -685,8 +685,8 @@ function CheckPage() {
                         disabled={busy || !verified}
                         onClick={confirmOut}
                       >
-                        {busy && <Loader2 className="animate-spin" />} Confirmar
-                        saída
+                        {busy && <LogoLoader light className="size-6" />}{" "}
+                        Confirmar saída
                       </Button>
                     </div>
                   )}

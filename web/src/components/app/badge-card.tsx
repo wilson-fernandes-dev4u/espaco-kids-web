@@ -64,7 +64,9 @@ export function BadgeCard({
         <div className="flex items-center gap-1.5 text-[7pt] leading-none">
           <span className="font-mono font-bold">{child.code}</span>
           {showFamily && family && (
-            <span className="truncate text-slate-700">· Fam. {family.code}</span>
+            <span className="truncate text-slate-700">
+              · Fam. {family.code}
+            </span>
           )}
           {showClass && cls && (
             <span className="truncate rounded-sm border border-slate-800 px-1 py-px font-bold">
@@ -78,7 +80,11 @@ export function BadgeCard({
           value={`${QR_PREFIX}${badge.token}`}
           level="M"
           marginSize={0}
-          style={{ height: `${Math.max(heightMm - 5, 10)}mm`, width: "auto", aspectRatio: "1" }}
+          style={{
+            height: `${Math.max(heightMm - 5, 10)}mm`,
+            width: "auto",
+            aspectRatio: "1",
+          }}
         />
       </div>
       {inactive && (

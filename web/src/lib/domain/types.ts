@@ -117,11 +117,7 @@ export interface GuardianCall {
 }
 
 export type IncidentKind =
-  | "briga"
-  | "mordida"
-  | "comportamento"
-  | "machucado"
-  | "outro";
+  "briga" | "mordida" | "comportamento" | "machucado" | "outro";
 
 /** Ocorrência na sala, registrada pela equipe. Nunca visível à família. */
 export interface Incident {

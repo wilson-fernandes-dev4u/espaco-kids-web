@@ -346,10 +346,16 @@ function Dashboard() {
           )}
         </Panel>
         {meds.length > 0 && (
-          <Panel title={`Medicações de hoje (${meds.length})`} className="lg:col-span-3">
+          <Panel
+            title={`Medicações de hoje (${meds.length})`}
+            className="lg:col-span-3"
+          >
             <ul className="divide-y">
               {meds.map(({ kid, m }, i) => (
-                <li key={i} className="flex flex-wrap items-center gap-3 py-2.5 text-sm">
+                <li
+                  key={i}
+                  className="flex flex-wrap items-center gap-3 py-2.5 text-sm"
+                >
                   <Pill className="size-4 shrink-0 text-primary" />
                   <Link
                     to="/criancas/$id"

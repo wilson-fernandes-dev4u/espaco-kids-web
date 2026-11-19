@@ -35,7 +35,9 @@ class PushTarget {
       2,
     ),
     'request' => '/inicio',
-    'call-ack' => '/chamadas',
+    // "Família a caminho": abre o Início, onde a chamada em aberto aparece
+    // com o botão de confirmar a chegada do responsável.
+    'call-ack' => '/inicio',
     _ => null,
   };
 

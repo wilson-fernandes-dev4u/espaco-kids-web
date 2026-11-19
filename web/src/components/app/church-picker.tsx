@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import { AppLogo } from "@/components/app/app-logo";
+import { AppLogo, LogoLoader } from "@/components/app/app-logo";
 import { doc, onSnapshot } from "firebase/firestore";
-import { Church, KeyRound, Loader2, LogOut, Plus, Smartphone } from "lucide-react";
+import { Church, KeyRound, LogOut, Plus, Smartphone } from "lucide-react";
 import { toast } from "sonner";
 import {
   AlertDialog,
@@ -22,7 +22,13 @@ import { ROLE_LABEL } from "@/lib/domain/rules";
 import type { Role } from "@/lib/domain/types";
 
 /** Logo da igreja (campo `logoUrl` do doc da igreja) ou o ícone padrão, no mesmo formato do menu lateral. */
-function ChurchLogo({ churchId, family }: { churchId: string; family: boolean }) {
+function ChurchLogo({
+  churchId,
+  family,
+}: {
+  churchId: string;
+  family: boolean;
+}) {
   const [logo, setLogo] = useState<string | null>(null);
   useEffect(
     () =>
@@ -43,7 +49,11 @@ function ChurchLogo({ churchId, family }: { churchId: string; family: boolean })
     );
   return (
     <div className="grid size-10 shrink-0 place-items-center rounded-xl bg-primary text-primary-foreground">
-      {family ? <Smartphone className="size-5" /> : <Church className="size-5" />}
+      {family ? (
+        <Smartphone className="size-5" />
+      ) : (
+        <Church className="size-5" />
+      )}
     </div>
   );
 }
@@ -77,7 +87,9 @@ export function ChurchPicker() {
     mode: "volunteer" | "family";
   } | null>(null);
   const [extraCode, setExtraCode] = useState("");
-  const [extraRole, setExtraRole] = useState<"professor" | "recepcao">("professor");
+  const [extraRole, setExtraRole] = useState<"professor" | "recepcao">(
+    "professor",
+  );
   const doExtra = async () => {
     if (!extra) return;
     setBusy("extra");
@@ -131,7 +143,7 @@ export function ChurchPicker() {
     <div className="grid min-h-screen place-items-center bg-background px-4 py-10">
       <div className="w-full max-w-lg space-y-4">
         <div className="text-center">
-          <AppLogo className="mx-auto size-12 rounded-2xl" />
+          <AppLogo variant="color" className="mx-auto size-14" />
           <h1 className="mt-3 text-xl font-bold">Suas igrejas</h1>
           <p className="text-sm text-muted-foreground">
             {user?.email} · escolha onde quer entrar agora.
@@ -145,82 +157,103 @@ export function ChurchPicker() {
               const semFamilia = !isFamily && !m.familyId;
               const aberto = extra?.churchId === m.churchId ? extra.mode : null;
               return (
-              <div key={m.churchId}>
-              <button
-                onClick={() => selectChurch(m.churchId)}
-                className="flex w-full items-center gap-3 p-4 text-left hover:bg-muted"
-              >
-                <ChurchLogo churchId={m.churchId} family={m.role === "responsavel"} />
-                <div className="min-w-0 flex-1">
-                  <p className="truncate font-semibold">{m.churchName}</p>
-                  <p className="text-xs text-muted-foreground">
-                    {roleLabel(m.role)}
-                  </p>
-                </div>
-                {m.churchId === churchId && (
-                  <span className="text-xs font-medium text-primary">
-                    atual
-                  </span>
-                )}
-              </button>
-              {(isFamily || semFamilia) && (
-                <div className="px-4 pb-3 pl-[4.5rem]">
-                  {!aberto ? (
-                    <button
-                      className="text-xs font-medium text-primary hover:underline"
-                      onClick={() => {
-                        setExtra({
-                          churchId: m.churchId,
-                          mode: isFamily ? "volunteer" : "family",
-                        });
-                        setExtraCode("");
-                      }}
-                    >
-                      {isFamily ? "Entrar como voluntário" : "Vincular minha família"}
-                    </button>
-                  ) : (
-                    <div className="space-y-2">
+                <div key={m.churchId}>
+                  <button
+                    onClick={() => selectChurch(m.churchId)}
+                    className="flex w-full items-center gap-3 p-4 text-left hover:bg-muted"
+                  >
+                    <ChurchLogo
+                      churchId={m.churchId}
+                      family={m.role === "responsavel"}
+                    />
+                    <div className="min-w-0 flex-1">
+                      <p className="truncate font-semibold">{m.churchName}</p>
                       <p className="text-xs text-muted-foreground">
-                        {aberto === "volunteer"
-                          ? "Digite o código da equipe. Você continua com o acesso da família."
-                          : "Digite o código da família (LK-…) para ver seus filhos."}
+                        {roleLabel(m.role)}
                       </p>
-                      <div className="flex flex-wrap gap-2">
-                        <Input
-                          className="h-9 w-44"
-                          placeholder={aberto === "volunteer" ? "KIDS-XXXXXX" : "LK-XXXXXX"}
-                          value={extraCode}
-                          onChange={(e) => setExtraCode(e.target.value.toUpperCase())}
-                        />
-                        {aberto === "volunteer" && (
-                          <select
-                            value={extraRole}
-                            onChange={(e) =>
-                              setExtraRole(e.target.value as "professor" | "recepcao")
-                            }
-                            className="h-9 rounded-md border bg-background px-2 text-sm"
-                          >
-                            <option value="professor">Professor(a)</option>
-                            <option value="recepcao">Recepção</option>
-                          </select>
-                        )}
-                        <Button
-                          size="sm"
-                          onClick={doExtra}
-                          disabled={busy !== null || extraCode.trim().length < 6}
+                    </div>
+                    {m.churchId === churchId && (
+                      <span className="text-xs font-medium text-primary">
+                        atual
+                      </span>
+                    )}
+                  </button>
+                  {(isFamily || semFamilia) && (
+                    <div className="px-4 pb-3 pl-[4.5rem]">
+                      {!aberto ? (
+                        <button
+                          className="text-xs font-medium text-primary hover:underline"
+                          onClick={() => {
+                            setExtra({
+                              churchId: m.churchId,
+                              mode: isFamily ? "volunteer" : "family",
+                            });
+                            setExtraCode("");
+                          }}
                         >
-                          {busy === "extra" && <Loader2 className="animate-spin" />}{" "}
-                          Confirmar
-                        </Button>
-                        <Button size="sm" variant="ghost" onClick={() => setExtra(null)}>
-                          Cancelar
-                        </Button>
-                      </div>
+                          {isFamily
+                            ? "Entrar como voluntário"
+                            : "Vincular minha família"}
+                        </button>
+                      ) : (
+                        <div className="space-y-2">
+                          <p className="text-xs text-muted-foreground">
+                            {aberto === "volunteer"
+                              ? "Digite o código da equipe. Você continua com o acesso da família."
+                              : "Digite o código da família (LK-…) para ver seus filhos."}
+                          </p>
+                          <div className="flex flex-wrap gap-2">
+                            <Input
+                              className="h-9 w-44"
+                              placeholder={
+                                aberto === "volunteer"
+                                  ? "KIDS-XXXXXX"
+                                  : "LK-XXXXXX"
+                              }
+                              value={extraCode}
+                              onChange={(e) =>
+                                setExtraCode(e.target.value.toUpperCase())
+                              }
+                            />
+                            {aberto === "volunteer" && (
+                              <select
+                                value={extraRole}
+                                onChange={(e) =>
+                                  setExtraRole(
+                                    e.target.value as "professor" | "recepcao",
+                                  )
+                                }
+                                className="h-9 rounded-md border bg-background px-2 text-sm"
+                              >
+                                <option value="professor">Professor(a)</option>
+                                <option value="recepcao">Recepção</option>
+                              </select>
+                            )}
+                            <Button
+                              size="sm"
+                              onClick={doExtra}
+                              disabled={
+                                busy !== null || extraCode.trim().length < 6
+                              }
+                            >
+                              {busy === "extra" && (
+                                <LogoLoader light className="size-6" />
+                              )}{" "}
+                              Confirmar
+                            </Button>
+                            <Button
+                              size="sm"
+                              variant="ghost"
+                              onClick={() => setExtra(null)}
+                            >
+                              Cancelar
+                            </Button>
+                          </div>
+                        </div>
+                      )}
                     </div>
                   )}
                 </div>
-              )}
-              </div>
               );
             })}
           </div>
@@ -259,7 +292,7 @@ export function ChurchPicker() {
             onClick={join}
             disabled={busy !== null || code.trim().length < 6}
           >
-            {busy === "join" && <Loader2 className="animate-spin" />} Entrar
+            {busy === "join" && <LogoLoader light className="size-6" />} Entrar
           </Button>
           <p className="text-xs text-muted-foreground">
             Código de família? Famílias usam o aplicativo Espaço Kids.
@@ -284,7 +317,7 @@ export function ChurchPicker() {
             onClick={() => setConfirmCreate(true)}
             disabled={busy !== null || name.trim().length < 3}
           >
-            {busy === "create" && <Loader2 className="animate-spin" />} Criar
+            {busy === "create" && <LogoLoader light className="size-6" />} Criar
             igreja
           </Button>
         </div>
@@ -292,22 +325,27 @@ export function ChurchPicker() {
         <AlertDialog open={confirmCreate} onOpenChange={setConfirmCreate}>
           <AlertDialogContent>
             <AlertDialogHeader>
-              <AlertDialogTitle>Criar a igreja “{name.trim()}”?</AlertDialogTitle>
+              <AlertDialogTitle>
+                Criar a igreja “{name.trim()}”?
+              </AlertDialogTitle>
               <AlertDialogDescription>
-                Será uma igreja nova e vazia, e você será o administrador dela. Suas
-                outras igrejas continuam como estão, e a nova não herda crianças,
-                famílias nem equipe de nenhuma delas. Para entrar numa igreja que já
-                existe, cancele e use o código de convite.
+                Será uma igreja nova e vazia, e você será o administrador dela.
+                Suas outras igrejas continuam como estão, e a nova não herda
+                crianças, famílias nem equipe de nenhuma delas. Para entrar numa
+                igreja que já existe, cancele e use o código de convite.
                 {nomeIgual && (
                   <span className="mt-2 block font-medium text-foreground">
-                    Atenção: você já participa de uma igreja chamada “{nomeIgual.churchName}”.
+                    Atenção: você já participa de uma igreja chamada “
+                    {nomeIgual.churchName}”.
                   </span>
                 )}
               </AlertDialogDescription>
             </AlertDialogHeader>
             <AlertDialogFooter>
               <AlertDialogCancel>Cancelar</AlertDialogCancel>
-              <AlertDialogAction onClick={create}>Sim, criar igreja</AlertDialogAction>
+              <AlertDialogAction onClick={create}>
+                Sim, criar igreja
+              </AlertDialogAction>
             </AlertDialogFooter>
           </AlertDialogContent>
         </AlertDialog>

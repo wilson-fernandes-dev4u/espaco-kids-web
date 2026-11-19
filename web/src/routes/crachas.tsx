@@ -121,7 +121,7 @@ function BadgesPage() {
     if (!v) return;
     const token = parseQr(v);
     let badge = state.badges.find((b) => b.token === token);
-    let child = badge
+    const child = badge
       ? state.children.find((c) => c.id === badge!.childId)
       : state.children.find((c) => c.code.toLowerCase() === v.toLowerCase());
     if (!badge && child) badge = activeBadge(child.id);

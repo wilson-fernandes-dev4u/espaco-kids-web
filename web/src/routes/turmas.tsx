@@ -1,4 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { LogoLoader } from "@/components/app/app-logo";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -7,7 +8,6 @@ import {
   AlertTriangle,
   Clock,
   DoorOpen,
-  Loader2,
   Pencil,
   Plus,
   QrCode,
@@ -189,7 +189,9 @@ function ClassDialog({
               Cancelar
             </Button>
             <Button type="submit" disabled={f.formState.isSubmitting}>
-              {f.formState.isSubmitting && <Loader2 className="animate-spin" />}
+              {f.formState.isSubmitting && (
+                <LogoLoader light className="size-6" />
+              )}
               Salvar
             </Button>
           </DialogFooter>

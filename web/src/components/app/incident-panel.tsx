@@ -46,8 +46,9 @@ export function IncidentPanel({ childId }: { childId?: string }) {
   const name = (id: string) => kids.get(id)?.nickname ?? "Criança removida";
   // Turma da criança na hora da ocorrência (cai na turma atual se faltar).
   const className = (i: Incident) =>
-    state.classes.find((c) => c.id === (i.classId || kids.get(i.childId)?.classId))
-      ?.name;
+    state.classes.find(
+      (c) => c.id === (i.classId || kids.get(i.childId)?.classId),
+    )?.name;
 
   return (
     <div className="space-y-4">

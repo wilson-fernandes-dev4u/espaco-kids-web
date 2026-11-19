@@ -140,7 +140,9 @@ export function TaskPanel({ classId }: { classId?: string }) {
                 variant="ghost"
                 aria-label="Remover tarefa"
                 onClick={() => {
-                  if (confirm("Remover esta tarefa? As famílias deixam de vê-la."))
+                  if (
+                    confirm("Remover esta tarefa? As famílias deixam de vê-la.")
+                  )
                     attempt(() => deleteTask(t.id), "Tarefa removida.");
                 }}
               >
@@ -225,8 +227,8 @@ export function TaskPanel({ classId }: { classId?: string }) {
       ) : (
         <>
           <p className="text-sm text-muted-foreground">
-            <strong className="text-foreground">{open.length}</strong> em
-            aberto • <strong className="text-foreground">{past.length}</strong>{" "}
+            <strong className="text-foreground">{open.length}</strong> em aberto
+            • <strong className="text-foreground">{past.length}</strong>{" "}
             encerrada{past.length === 1 ? "" : "s"}
           </p>
           {open.length === 0 ? (
@@ -366,7 +368,11 @@ function TaskDialog({
           <Field
             label="Links para baixar documento ou imagem (opcional)"
             hint="Cole o link do arquivo no Google Drive, Dropbox ou site. Deixe o compartilhamento como “qualquer pessoa com o link”."
-            error={linksOk ? undefined : "Use links completos, começando com https://"}
+            error={
+              linksOk
+                ? undefined
+                : "Use links completos, começando com https://"
+            }
           >
             <div className="space-y-2">
               {links.map((l, i) => (
@@ -391,7 +397,9 @@ function TaskDialog({
                     size="icon"
                     variant="ghost"
                     aria-label="Remover link"
-                    onClick={() => setLinks((ls) => ls.filter((_, j) => j !== i))}
+                    onClick={() =>
+                      setLinks((ls) => ls.filter((_, j) => j !== i))
+                    }
                   >
                     <X />
                   </Button>
@@ -402,7 +410,9 @@ function TaskDialog({
                   type="button"
                   size="sm"
                   variant="outline"
-                  onClick={() => setLinks((ls) => [...ls, { label: "", url: "" }])}
+                  onClick={() =>
+                    setLinks((ls) => [...ls, { label: "", url: "" }])
+                  }
                 >
                   <Plus /> Adicionar link
                 </Button>

@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { LogoLoader } from "@/components/app/app-logo";
 import { useEffect, useState, type ReactNode } from "react";
-import { Check, Image as ImageIcon, Loader2, Save } from "lucide-react";
+import { Check, Image as ImageIcon, Save } from "lucide-react";
 import { toast } from "sonner";
 import { useStore } from "@/lib/store";
 import { PLANS } from "@/lib/site";
@@ -131,7 +132,7 @@ function SettingsPage() {
         description="Identidade, regras de operação e privacidade."
         actions={
           <Button onClick={save} disabled={!dirty || saving}>
-            {saving ? <Loader2 className="animate-spin" /> : <Save />} Salvar
+            {saving ? <LogoLoader light className="size-6" /> : <Save />} Salvar
             alterações
           </Button>
         }

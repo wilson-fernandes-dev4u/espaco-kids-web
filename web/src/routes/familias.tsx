@@ -1,4 +1,5 @@
 import { foldText } from "@/lib/utils";
+import { LogoLoader } from "@/components/app/app-logo";
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -10,7 +11,6 @@ import {
   Copy,
   RefreshCw,
   Smartphone,
-  Loader2,
   Pencil,
   Plus,
   UserPlus,
@@ -255,7 +255,9 @@ function FamilyDialog({
               Cancelar
             </Button>
             <Button type="submit" disabled={f.formState.isSubmitting}>
-              {f.formState.isSubmitting && <Loader2 className="animate-spin" />}
+              {f.formState.isSubmitting && (
+                <LogoLoader light className="size-6" />
+              )}
               Salvar
             </Button>
           </DialogFooter>
@@ -367,7 +369,9 @@ function GuardianDialog({
               Cancelar
             </Button>
             <Button type="submit" disabled={f.formState.isSubmitting}>
-              {f.formState.isSubmitting && <Loader2 className="animate-spin" />}
+              {f.formState.isSubmitting && (
+                <LogoLoader light className="size-6" />
+              )}
               Salvar
             </Button>
           </DialogFooter>
@@ -455,7 +459,9 @@ function AuthorizedDialog({
               Cancelar
             </Button>
             <Button type="submit" disabled={f.formState.isSubmitting}>
-              {f.formState.isSubmitting && <Loader2 className="animate-spin" />}
+              {f.formState.isSubmitting && (
+                <LogoLoader light className="size-6" />
+              )}
               Salvar
             </Button>
           </DialogFooter>

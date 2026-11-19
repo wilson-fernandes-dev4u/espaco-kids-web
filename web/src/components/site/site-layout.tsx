@@ -17,7 +17,7 @@ export function SiteNav() {
     <header className="sticky top-0 z-30 border-b bg-background/85 backdrop-blur">
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6">
         <Link to="/" className="flex items-center gap-2.5">
-          <AppLogo className="size-9" />
+          <AppLogo variant="color" className="size-10" />
           <span className="font-bold">{SITE.name}</span>
         </Link>
         <nav className="hidden items-center gap-1 md:flex">
@@ -90,7 +90,7 @@ export function SiteFooter() {
       <div className="mx-auto grid max-w-6xl gap-8 px-4 py-10 sm:px-6 md:grid-cols-3">
         <div>
           <div className="flex items-center gap-2.5">
-            <AppLogo className="size-9" />
+            <AppLogo variant="color" className="size-10" />
             <span className="font-bold">{SITE.name}</span>
           </div>
           <p className="mt-3 max-w-xs text-sm text-muted-foreground">

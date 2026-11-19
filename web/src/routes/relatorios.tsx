@@ -221,9 +221,7 @@ function ReportsPage() {
         return {
           headers: ["Criança", "Código", "Turma", "Pendências"],
           rows: state.children
-            .filter(
-              (c) => isIncomplete(c) && classOk(c.classId) && matchKid(c),
-            )
+            .filter((c) => isIncomplete(c) && classOk(c.classId) && matchKid(c))
             .map((c) => [
               c.fullName,
               c.code,

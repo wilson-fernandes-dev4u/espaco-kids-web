@@ -15,6 +15,7 @@ import '../../../../shared/widgets/pattern_card.dart';
 import '../../../../shared/widgets/person_avatar.dart';
 import '../../../../shared/widgets/stat_card.dart';
 import '../../../auth/presentation/providers/auth_providers.dart';
+import '../../../calls/domain/entities/guardian_call.dart';
 import '../../../calls/presentation/providers/calls_providers.dart';
 import '../../../checkin/domain/entities/checkin_request.dart';
 import '../../../checkin/presentation/providers/checkin_actions.dart';
@@ -49,10 +50,12 @@ class StaffHomeScreen extends ConsumerWidget {
         (ref.watch(pendingRequestsProvider).valueOrNull ?? const [])
             .where((r) => room == null || ids.contains(r.childId))
             .toList();
-    final openCalls =
+    final activeCalls =
         calls
             .where((c) => c.open && (room == null || c.classId == room.classId))
-            .length;
+            .toList()
+          ..sort((a, b) => a.createdAt.compareTo(b.createdAt));
+    final openCalls = activeCalls.length;
 
     // Na sala: só a turma do check-in. Sem sala, o professor vê primeiro as
     // suas turmas.
@@ -168,6 +171,20 @@ class StaffHomeScreen extends ConsumerWidget {
                   trailing: const Icon(Icons.chevron_right),
                   onTap: () => context.push('/crianca/${c.id}'),
                 ),
+              ),
+          ],
+          if (activeCalls.isNotEmpty) ...[
+            const SizedBox(height: AppSpacing.lg),
+            const FormSectionHeader(
+              icon: Icons.campaign_outlined,
+              title: 'Chamadas em andamento',
+              description:
+                  'Confirme quando o responsável chegar para buscar a criança.',
+            ),
+            for (final c in activeCalls)
+              _CallArrivalCard(
+                call: c,
+                child: allChildren.where((k) => k.id == c.childId).firstOrNull,
               ),
           ],
           if (requests.isNotEmpty) ...[
@@ -346,6 +363,89 @@ class _QuickAction extends StatelessWidget {
                 label,
                 style: Theme.of(context).textTheme.labelLarge,
                 textAlign: TextAlign.center,
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+/// Chamada em aberto na tela inicial: a equipe confirma que o responsável
+/// chegou (encerra a chamada como atendida) ou cancela.
+class _CallArrivalCard extends ConsumerWidget {
+  const _CallArrivalCard({required this.call, required this.child});
+
+  final GuardianCall call;
+  final Child? child;
+
+  Future<void> _set(BuildContext context, WidgetRef ref, String status) async {
+    try {
+      await ref.read(callsRepositoryProvider).setStatus(call.id, status);
+      if (context.mounted) {
+        showInfo(
+          context,
+          status == 'atendida' ? 'Chegada confirmada.' : 'Chamada cancelada.',
+        );
+      }
+    } catch (e) {
+      if (context.mounted) showError(context, e);
+    }
+  }
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final onTheWay = call.status == 'visualizada';
+    final name = child?.displayName ?? 'Criança';
+    return Padding(
+      padding: const EdgeInsets.only(bottom: AppSpacing.sm),
+      child: Card(
+        child: Padding(
+          padding: const EdgeInsets.all(AppSpacing.md),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  PersonAvatar(
+                    name: child?.fullName ?? name,
+                    photo: child?.photoUrl,
+                  ),
+                  const SizedBox(width: AppSpacing.md),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          name,
+                          style: Theme.of(context).textTheme.titleSmall,
+                        ),
+                        Text(
+                          '${onTheWay ? 'Responsável a caminho' : 'Aguardando o responsável'}'
+                          ' · ${hhmm(call.createdAt)}',
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: AppSpacing.sm),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  TextButton(
+                    onPressed: () => _set(context, ref, 'cancelada'),
+                    child: const Text('Cancelar'),
+                  ),
+                  FilledButton(
+                    style: FilledButton.styleFrom(
+                      backgroundColor: AppColors.success,
+                    ),
+                    onPressed: () => _set(context, ref, 'atendida'),
+                    child: const Text('Responsável chegou'),
+                  ),
+                ],
               ),
             ],
           ),

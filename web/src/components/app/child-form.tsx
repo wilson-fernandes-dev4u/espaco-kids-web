@@ -1,11 +1,12 @@
 import { useForm } from "react-hook-form";
+import { LogoLoader } from "@/components/app/app-logo";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
-import { Camera, Loader2, Lock, X } from "lucide-react";
+import { Camera, Lock, X } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
 import { resizePhoto } from "@/lib/photo";
@@ -224,7 +225,7 @@ export function ChildForm({
       )}
       <div className="flex justify-end gap-2">
         <Button type="submit" disabled={saving || isSubmitting}>
-          {saving && <Loader2 className="animate-spin" />}
+          {saving && <LogoLoader light className="size-6" />}
           {initial ? "Salvar alterações" : "Cadastrar criança"}
         </Button>
       </div>

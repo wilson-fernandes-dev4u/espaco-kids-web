@@ -171,7 +171,7 @@ function SideNav({
             className="size-10 shrink-0 rounded-xl bg-card object-cover"
           />
         ) : (
-          <AppLogo className="size-10" />
+          <AppLogo variant="color" className="size-11" />
         )}
         <div className={cn("min-w-0", collapsed && "hidden")}>
           <p className="truncate text-sm font-bold">Espaço Kids</p>

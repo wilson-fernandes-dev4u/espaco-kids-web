@@ -4,7 +4,7 @@ import type { Guardian } from "./domain/types";
 
 /** Normaliza telefone brasileiro para o formato internacional (55 + DDD + número). Retorna null se inválido. */
 export function normalizePhoneBR(raw: string): string | null {
-  let d = raw.replace(/\D/g, "").replace(/^0+/, "");
+  const d = raw.replace(/\D/g, "").replace(/^0+/, "");
   if (d.startsWith("55") && (d.length === 12 || d.length === 13)) return d;
   if (d.length === 10 || d.length === 11) return `55${d}`;
   return null;

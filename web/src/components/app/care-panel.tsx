@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { Loader2, Pill, Plus, Trash2 } from "lucide-react";
+import { LogoLoader } from "@/components/app/app-logo";
+import { Pill, Plus, Trash2 } from "lucide-react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -129,7 +130,16 @@ export function CarePanel({ child }: { child: Child }) {
       <div>
         <dl className="divide-y">
           <Line k="Condições" v={conds.join(" · ")} />
-          <Line k="Laudo" v={care.conditions.length ? (care.hasReport ? "Tem laudo" : "Sem laudo informado") : ""} />
+          <Line
+            k="Laudo"
+            v={
+              care.conditions.length
+                ? care.hasReport
+                  ? "Tem laudo"
+                  : "Sem laudo informado"
+                : ""
+            }
+          />
           <Line k="Comunicação" v={COMMUNICATION[care.communication]} />
           <Line
             k="Sensibilidades"
@@ -137,7 +147,10 @@ export function CarePanel({ child }: { child: Child }) {
           />
           <Line k="O que acalma" v={care.calming} />
           <Line k="O que desencadeia crise" v={care.triggers} />
-          <Line k="Acompanhante" v={care.needsCompanion ? "Precisa de acompanhante" : ""} />
+          <Line
+            k="Acompanhante"
+            v={care.needsCompanion ? "Precisa de acompanhante" : ""}
+          />
           <Line k="Alergias" v={care.allergies} />
           <Line k="Alimentação" v={care.diet} />
           <Line
@@ -164,7 +177,9 @@ export function CarePanel({ child }: { child: Child }) {
           />
           <Line
             k="Contato de emergência"
-            v={[care.emergencyName, care.emergencyPhone].filter(Boolean).join(" · ")}
+            v={[care.emergencyName, care.emergencyPhone]
+              .filter(Boolean)
+              .join(" · ")}
           />
           <Line k="Plano de saúde" v={care.healthPlan} />
           <Line
@@ -239,7 +254,10 @@ export function CarePanel({ child }: { child: Child }) {
           />
         )}
         <label className="flex items-center gap-3 text-sm">
-          <Switch checked={p.hasReport} onCheckedChange={(v) => set("hasReport", v)} />
+          <Switch
+            checked={p.hasReport}
+            onCheckedChange={(v) => set("hasReport", v)}
+          />
           Tem laudo
         </label>
       </Section>
@@ -251,7 +269,10 @@ export function CarePanel({ child }: { child: Child }) {
             options={COMMUNICATION}
             value={p.communication ? [p.communication] : []}
             onChange={(v) =>
-              set("communication", (v[v.length - 1] ?? "") as CareProfile["communication"])
+              set(
+                "communication",
+                (v[v.length - 1] ?? "") as CareProfile["communication"],
+              )
             }
           />
         </div>
@@ -265,11 +286,19 @@ export function CarePanel({ child }: { child: Child }) {
         </div>
         <div className="space-y-1.5">
           <Label>O que acalma</Label>
-          <Textarea rows={2} value={p.calming} onChange={(e) => set("calming", e.target.value)} />
+          <Textarea
+            rows={2}
+            value={p.calming}
+            onChange={(e) => set("calming", e.target.value)}
+          />
         </div>
         <div className="space-y-1.5">
           <Label>O que desencadeia crise</Label>
-          <Textarea rows={2} value={p.triggers} onChange={(e) => set("triggers", e.target.value)} />
+          <Textarea
+            rows={2}
+            value={p.triggers}
+            onChange={(e) => set("triggers", e.target.value)}
+          />
         </div>
         <label className="flex items-center gap-3 text-sm">
           <Switch
@@ -283,7 +312,11 @@ export function CarePanel({ child }: { child: Child }) {
       <Section title="Alergias e alimentação">
         <div className="space-y-1.5">
           <Label>Alergias (alimentar, medicamento…)</Label>
-          <Textarea rows={2} value={p.allergies} onChange={(e) => set("allergies", e.target.value)} />
+          <Textarea
+            rows={2}
+            value={p.allergies}
+            onChange={(e) => set("allergies", e.target.value)}
+          />
         </div>
         <div className="space-y-1.5">
           <Label>Restrição alimentar</Label>
@@ -295,8 +328,16 @@ export function CarePanel({ child }: { child: Child }) {
         {p.medications.map((m, i) => (
           <div key={i} className="space-y-2 rounded-lg border p-3">
             <div className="grid gap-2 sm:grid-cols-2">
-              <Input placeholder="Nome" value={m.name} onChange={(e) => setMed(i, { name: e.target.value })} />
-              <Input placeholder="Dose (ex.: 10 mg)" value={m.dose} onChange={(e) => setMed(i, { dose: e.target.value })} />
+              <Input
+                placeholder="Nome"
+                value={m.name}
+                onChange={(e) => setMed(i, { name: e.target.value })}
+              />
+              <Input
+                placeholder="Dose (ex.: 10 mg)"
+                value={m.dose}
+                onChange={(e) => setMed(i, { dose: e.target.value })}
+              />
             </div>
             <Input
               placeholder="Horários (ex.: 12:00, 18:00)"
@@ -310,10 +351,17 @@ export function CarePanel({ child }: { child: Child }) {
                 })
               }
             />
-            <Input placeholder="Observação (ex.: com lanche)" value={m.note} onChange={(e) => setMed(i, { note: e.target.value })} />
+            <Input
+              placeholder="Observação (ex.: com lanche)"
+              value={m.note}
+              onChange={(e) => setMed(i, { note: e.target.value })}
+            />
             <div className="flex items-center justify-between">
               <label className="flex items-center gap-3 text-sm">
-                <Switch checked={m.staffGives} onCheckedChange={(v) => setMed(i, { staffGives: v })} />
+                <Switch
+                  checked={m.staffGives}
+                  onCheckedChange={(v) => setMed(i, { staffGives: v })}
+                />
                 A equipe administra
               </label>
               <Button
@@ -321,7 +369,10 @@ export function CarePanel({ child }: { child: Child }) {
                 variant="ghost"
                 size="sm"
                 onClick={() =>
-                  set("medications", p.medications.filter((_, j) => j !== i))
+                  set(
+                    "medications",
+                    p.medications.filter((_, j) => j !== i),
+                  )
                 }
               >
                 <Trash2 /> Remover
@@ -346,10 +397,22 @@ export function CarePanel({ child }: { child: Child }) {
 
       <Section title="Emergência e outros">
         <div className="grid gap-2 sm:grid-cols-2">
-          <Input placeholder="Contato de emergência" value={p.emergencyName} onChange={(e) => set("emergencyName", e.target.value)} />
-          <Input placeholder="Telefone" value={p.emergencyPhone} onChange={(e) => set("emergencyPhone", e.target.value)} />
+          <Input
+            placeholder="Contato de emergência"
+            value={p.emergencyName}
+            onChange={(e) => set("emergencyName", e.target.value)}
+          />
+          <Input
+            placeholder="Telefone"
+            value={p.emergencyPhone}
+            onChange={(e) => set("emergencyPhone", e.target.value)}
+          />
         </div>
-        <Input placeholder="Plano de saúde (opcional)" value={p.healthPlan} onChange={(e) => set("healthPlan", e.target.value)} />
+        <Input
+          placeholder="Plano de saúde (opcional)"
+          value={p.healthPlan}
+          onChange={(e) => set("healthPlan", e.target.value)}
+        />
         <label className="flex items-center gap-3 text-sm">
           <Switch
             checked={p.imageConsent === true}
@@ -359,15 +422,23 @@ export function CarePanel({ child }: { child: Child }) {
         </label>
         <div className="space-y-1.5">
           <Label>Observações de saúde</Label>
-          <Textarea rows={2} value={text} onChange={(e) => setText(e.target.value)} />
+          <Textarea
+            rows={2}
+            value={text}
+            onChange={(e) => setText(e.target.value)}
+          />
         </div>
       </Section>
 
       <div className="flex gap-2">
         <Button onClick={save} disabled={busy}>
-          {busy && <Loader2 className="animate-spin" />} Salvar
+          {busy && <LogoLoader light className="size-6" />} Salvar
         </Button>
-        <Button variant="outline" onClick={() => setEditing(false)} disabled={busy}>
+        <Button
+          variant="outline"
+          onClick={() => setEditing(false)}
+          disabled={busy}
+        >
           Cancelar
         </Button>
       </div>

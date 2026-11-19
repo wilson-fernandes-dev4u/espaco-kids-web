@@ -163,3 +163,31 @@
     print-color-adjust: exact;
   }
 }
+
+/* Carregamento da marca (LogoLoader): cada bola acende no seu quarto do ciclo de 2,4 s. */
+@keyframes logo-loader-glow {
+  0%,
+  25%,
+  100% {
+    opacity: 0.28;
+    transform: scale(1);
+  }
+  12.5% {
+    opacity: 1;
+    transform: scale(1.12);
+  }
+}
+
+.logo-loader-piece {
+  opacity: 0.28;
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: logo-loader-glow 2.4s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .logo-loader-piece {
+    animation: none;
+    opacity: 0.7;
+  }
+}

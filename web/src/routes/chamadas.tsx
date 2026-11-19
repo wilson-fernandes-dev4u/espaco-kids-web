@@ -1,10 +1,10 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { LogoLoader } from "@/components/app/app-logo";
 import { useMemo, useState } from "react";
 import {
   BellRing,
   CheckCheck,
   Info,
-  Loader2,
   Phone,
   Siren,
   UserCheck,
@@ -69,13 +69,18 @@ const PERIODS: { id: Period; label: string }[] = [
 const isoDay = (d: Date) =>
   `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
 const fmtDay = (d: Date) =>
-  d.toLocaleDateString("pt-BR", { day: "2-digit", month: "2-digit", year: "numeric" });
+  d.toLocaleDateString("pt-BR", {
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric",
+  });
 
 /** Intervalo [início, fim) do período escolhido, em horário local. */
 function rangeOf(period: Period, from: string, to: string): [Date, Date] {
   const now = new Date();
   const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-  const next = (d: Date, n = 1) => new Date(d.getFullYear(), d.getMonth(), d.getDate() + n);
+  const next = (d: Date, n = 1) =>
+    new Date(d.getFullYear(), d.getMonth(), d.getDate() + n);
   switch (period) {
     case "hoje":
       return [today, next(today)];
@@ -338,7 +343,11 @@ function CallsPage() {
               <p className="text-xs text-muted-foreground">
                 {(() => {
                   const [a, b] = rangeOf(period, from, to);
-                  const last = new Date(b.getFullYear(), b.getMonth(), b.getDate() - 1);
+                  const last = new Date(
+                    b.getFullYear(),
+                    b.getMonth(),
+                    b.getDate() - 1,
+                  );
                   return `${fmtDay(a)} a ${fmtDay(last)}`;
                 })()}{" "}
                 · {calls.length} {calls.length === 1 ? "chamada" : "chamadas"}
@@ -354,7 +363,11 @@ function CallsPage() {
             {calls.length === 0 ? (
               <EmptyState
                 icon={Siren}
-                title={view === "todas" ? "Nenhuma chamada no período" : "Nenhuma chamada"}
+                title={
+                  view === "todas"
+                    ? "Nenhuma chamada no período"
+                    : "Nenhuma chamada"
+                }
                 text={
                   view === "todas"
                     ? "Tente outro período."
@@ -551,7 +564,7 @@ function CallsPage() {
               Cancelar
             </Button>
             <Button disabled={busy} onClick={confirm}>
-              {busy && <Loader2 className="animate-spin" />}Confirmar chamada
+              {busy && <LogoLoader light className="size-6" />}Confirmar chamada
             </Button>
           </DialogFooter>
         </DialogContent>

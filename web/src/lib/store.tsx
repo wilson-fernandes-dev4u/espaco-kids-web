@@ -37,7 +37,13 @@ import {
 } from "firebase/auth";
 import { db, getSecondaryAuth, getSecondaryDb } from "./firebase/client";
 import { useAuth } from "./auth";
-import { LOCKED_REASON, lockedChildIds, resolvePlan, type BillingDoc, type PlanState } from "./billing";
+import {
+  LOCKED_REASON,
+  lockedChildIds,
+  resolvePlan,
+  type BillingDoc,
+  type PlanState,
+} from "./billing";
 import { DEFAULT_SETTINGS, createSeed } from "./domain/mock";
 import {
   can,

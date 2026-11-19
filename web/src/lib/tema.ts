@@ -52,7 +52,12 @@ export const TEMAS: Record<TemaCor, ConfigTema> = {
   rosa: { label: "Rosa", hue: 340, chromaScale: 0.85 },
   ciano: { label: "Ciano", hue: 195 },
   turquesa: { label: "Turquesa", hue: 175, chromaScale: 0.95 },
-  dourado: { label: "Dourado", hue: 85, chromaScale: 0.75, lightnessShift: -0.03 },
+  dourado: {
+    label: "Dourado",
+    hue: 85,
+    chromaScale: 0.75,
+    lightnessShift: -0.03,
+  },
   grafite: { label: "Grafite", hue: 240, chromaScale: 0.25 },
   indigo: { label: "Índigo", hue: 260 },
   bordo: { label: "Bordô", hue: 5, chromaScale: 0.85, lightnessShift: -0.08 },
@@ -63,7 +68,12 @@ export const TEMAS: Record<TemaCor, ConfigTema> = {
   ceu: { label: "Céu", hue: 220, chromaScale: 0.85 },
   magenta: { label: "Magenta", hue: 325 },
   oliva: { label: "Oliva", hue: 115, chromaScale: 0.55, lightnessShift: -0.08 },
-  petroleo: { label: "Petróleo", hue: 205, chromaScale: 0.6, lightnessShift: -0.1 },
+  petroleo: {
+    label: "Petróleo",
+    hue: 205,
+    chromaScale: 0.6,
+    lightnessShift: -0.1,
+  },
 };
 
 export const TEMA_ORIGINAL: TemaEscolha = "original";
@@ -136,7 +146,10 @@ export function aplicarTema(escolha: unknown): void {
 
 /** Gradiente da bolinha de escolha (mesma relação primary → tom mais claro). */
 export function gradientePreviaTema(t: TemaEscolha): string {
-  const cfg = t === "original" ? { hue: 255, chromaScale: 1, lightnessShift: 0 } : TEMAS[t];
+  const cfg =
+    t === "original"
+      ? { hue: 255, chromaScale: 1, lightnessShift: 0 }
+      : TEMAS[t];
   const escala = cfg.chromaScale ?? 1;
   const shift = cfg.lightnessShift ?? 0;
   const de = paraOklch(0.52 + shift, 0.17 * escala, cfg.hue);

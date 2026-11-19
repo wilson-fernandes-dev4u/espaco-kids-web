@@ -14,6 +14,7 @@ import '../../../calls/domain/entities/guardian_call.dart';
 import '../../../calls/presentation/providers/calls_providers.dart';
 import '../../../checkin/presentation/providers/checkin_actions.dart';
 import '../../../family/presentation/providers/family_providers.dart';
+import '../../../family/presentation/providers/news_providers.dart';
 import '../../../incidents/presentation/providers/incidents_providers.dart';
 import '../../../incidents/presentation/widgets/incident_sheet.dart';
 import '../../../incidents/presentation/widgets/incident_tile.dart';
@@ -285,11 +286,15 @@ class _Body extends ConsumerWidget {
             ),
             ListView(
               padding: const EdgeInsets.all(AppSpacing.md),
-              children: [_IncidentsSection(child: child)],
+              children: [
+                if (family) _SeenMarker(child: child, tasks: false),
+                _IncidentsSection(child: child),
+              ],
             ),
             ListView(
               padding: const EdgeInsets.all(AppSpacing.md),
               children: [
+                if (family) _SeenMarker(child: child, tasks: true),
                 TaskList(classId: child.classId, className: className),
               ],
             ),
@@ -297,6 +302,30 @@ class _Body extends ConsumerWidget {
         ),
       ),
     );
+  }
+}
+
+/// Marca como vistas as ocorrências/tarefas da aba aberta pela família, para
+/// o "novo" do cartão do filho sumir depois que a pessoa foi conferir.
+class _SeenMarker extends ConsumerWidget {
+  const _SeenMarker({required this.child, required this.tasks});
+
+  final Child child;
+  final bool tasks;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final news = ref.watch(childNewsProvider(child));
+    final ids =
+        tasks
+            ? news.tasks.map((t) => t.id).toList()
+            : news.incidents.map((i) => i.id).toList();
+    if (ids.isNotEmpty) {
+      WidgetsBinding.instance.addPostFrameCallback(
+        (_) => ref.read(seenIdsProvider.notifier).markAll(ids),
+      );
+    }
+    return const SizedBox.shrink();
   }
 }
 

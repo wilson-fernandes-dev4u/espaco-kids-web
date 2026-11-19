@@ -22,6 +22,7 @@ import '../../../kids/presentation/providers/kids_providers.dart';
 import '../../../kids/domain/entities/person.dart';
 import '../../../kids/domain/entities/room_staff.dart';
 import '../providers/family_providers.dart';
+import '../providers/news_providers.dart';
 import '../widgets/child_form.dart';
 import '../widgets/family_code_card.dart';
 import '../widgets/family_profile_card.dart';
@@ -302,6 +303,55 @@ class _RoomTeam extends StatelessWidget {
   }
 }
 
+/// Faixa destacada no cartão do filho: algo novo para a família conferir.
+class _NewsBanner extends StatelessWidget {
+  const _NewsBanner({
+    required this.icon,
+    required this.color,
+    required this.text,
+    required this.onTap,
+  });
+
+  final IconData icon;
+  final Color color;
+  final String text;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(top: AppSpacing.sm),
+      child: Material(
+        color: color.withValues(alpha: 0.12),
+        borderRadius: BorderRadius.circular(AppSpacing.buttonRadius),
+        child: InkWell(
+          borderRadius: BorderRadius.circular(AppSpacing.buttonRadius),
+          onTap: onTap,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: AppSpacing.md,
+              vertical: AppSpacing.sm + 2,
+            ),
+            child: Row(
+              children: [
+                Icon(icon, color: color),
+                const SizedBox(width: AppSpacing.sm),
+                Expanded(
+                  child: Text(
+                    text,
+                    style: Theme.of(context).textTheme.labelLarge,
+                  ),
+                ),
+                Icon(Icons.chevron_right, color: color),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
 class _KidCard extends ConsumerWidget {
   const _KidCard({required this.child, required this.request});
 
@@ -338,6 +388,7 @@ class _KidCard extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final presence = ref.watch(childPresenceProvider(child.id)).valueOrNull;
     final present = presence != null;
+    final news = ref.watch(childNewsProvider(child));
     final scheme = Theme.of(context).colorScheme;
     // Equipe que fez check-in na sala do filho hoje.
     final team =
@@ -398,6 +449,28 @@ class _KidCard extends ConsumerWidget {
                 ],
               ),
             ),
+            // Novidades ainda não conferidas: ocorrência enviada pela equipe e
+            // tarefa nova da turma. Tocar leva direto para a aba certa.
+            if (news.incidents.isNotEmpty)
+              _NewsBanner(
+                icon: Icons.report_gmailerrorred_outlined,
+                color: AppColors.danger,
+                text:
+                    news.incidents.length == 1
+                        ? 'A equipe enviou uma ocorrência. Toque para ler.'
+                        : 'A equipe enviou ${news.incidents.length} ocorrências. Toque para ler.',
+                onTap: () => context.push('/crianca/${child.id}?tab=1'),
+              ),
+            if (news.tasks.isNotEmpty)
+              _NewsBanner(
+                icon: Icons.checklist,
+                color: AppColors.primary,
+                text:
+                    news.tasks.length == 1
+                        ? 'Tem uma tarefa nova da turma. Toque para ver.'
+                        : 'Tem ${news.tasks.length} tarefas novas da turma. Toque para ver.',
+                onTap: () => context.push('/crianca/${child.id}?tab=2'),
+              ),
             const SizedBox(height: AppSpacing.md),
             // Onde está: um selo de status e, ao lado, a equipe da sala.
             // Altura fixa: com ou sem equipe na sala, o selo não muda de lugar.

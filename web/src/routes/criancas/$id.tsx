@@ -181,9 +181,7 @@ function ChildDetail() {
       <Tabs defaultValue="info">
         <TabsList className="mb-4 h-auto w-full justify-start overflow-x-auto">
           <TabsTrigger value="info">Perfil</TabsTrigger>
-          {can(role, "saude") && (
-            <TabsTrigger value="saude">Saúde</TabsTrigger>
-          )}
+          {can(role, "saude") && <TabsTrigger value="saude">Saúde</TabsTrigger>}
           <TabsTrigger value="familia">Família e retirada</TabsTrigger>
           <TabsTrigger value="historico">Histórico</TabsTrigger>
           <TabsTrigger value="ocorrencias">Ocorrências</TabsTrigger>

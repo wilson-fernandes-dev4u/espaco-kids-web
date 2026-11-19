@@ -1,9 +1,9 @@
 import { useEffect, useMemo, useState, type ReactNode } from "react";
+import { LogoLoader } from "@/components/app/app-logo";
 import {
   ChevronLeft,
   ChevronRight,
   DatabaseZap,
-  Loader2,
   Search,
   TriangleAlert,
 } from "lucide-react";
@@ -77,7 +77,8 @@ export function SeedCard({ canSeed }: { canSeed: boolean }) {
             }
           }}
         >
-          {busy && <Loader2 className="animate-spin" />} Carregar demonstração
+          {busy && <LogoLoader light className="size-6" />} Carregar
+          demonstração
         </Button>
       )}
     </div>

@@ -1,7 +1,8 @@
 // Leitor de QR Code pela câmera (jsQR). Devolve apenas o texto lido; quem chama decide o que fazer.
 // A leitura NUNCA libera retirada: apenas localiza o cadastro (a validação ocorre no check-out).
 import { useEffect, useRef, useState } from "react";
-import { Camera, CameraOff, Loader2 } from "lucide-react";
+import { LogoLoader } from "@/components/app/app-logo";
+import { Camera, CameraOff } from "lucide-react";
 import jsQR from "jsqr";
 import { Button } from "@/components/ui/button";
 
@@ -106,7 +107,7 @@ export function QrScanner({
       </div>
       {state === "starting" && (
         <div className="absolute inset-0 grid place-items-center text-white">
-          <Loader2 className="size-6 animate-spin" />
+          <LogoLoader className="size-10" />
         </div>
       )}
     </div>

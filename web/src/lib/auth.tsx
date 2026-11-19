@@ -152,7 +152,11 @@ function readSaved(): string | null {
 async function ensureUserDoc(uid: string, name: string, email: string) {
   const ref = doc(db(), "users", uid);
   if ((await getDoc(ref)).exists()) return;
-  await setDoc(ref, { name: name.trim(), email: email.trim(), createdAt: nowIso() });
+  await setDoc(ref, {
+    name: name.trim(),
+    email: email.trim(),
+    createdAt: nowIso(),
+  });
 }
 
 /** Lê `codes/{code}` e exige que seja um convite de equipe. */
@@ -165,7 +169,11 @@ async function peekInvite(raw: string) {
     throw new Error(
       "Esse é um código de família. Famílias usam o aplicativo Espaço Kids.",
     );
-  return { code, churchId: d.churchId as string, churchName: (d.churchName as string) ?? "Igreja" };
+  return {
+    code,
+    churchId: d.churchId as string,
+    churchName: (d.churchName as string) ?? "Igreja",
+  };
 }
 
 /** Vincula a pessoa a uma igreja como professor/recepção (convite válido). */
@@ -235,10 +243,19 @@ async function joinAsStaff(
 }
 
 /** Cria a igreja (doc + administrador + cópia do vínculo) e grava as configurações. */
-async function makeChurch(uid: string, name: string, email: string, churchName: string) {
+async function makeChurch(
+  uid: string,
+  name: string,
+  email: string,
+  churchName: string,
+) {
   const ref = doc(collection(db(), "tenants"));
   const batch = writeBatch(db());
-  batch.set(ref, { name: churchName.trim(), createdAt: nowIso(), createdBy: uid });
+  batch.set(ref, {
+    name: churchName.trim(),
+    createdAt: nowIso(),
+    createdBy: uid,
+  });
   batch.set(doc(db(), "tenants", ref.id, "members", uid), {
     name: name.trim(),
     email,
@@ -345,7 +362,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         setMember({
           key,
           profile: snap.exists()
-            ? ({ id: snap.id, ...(snap.data() as Omit<AppUser, "id">) } as AppUser)
+            ? ({
+                id: snap.id,
+                ...(snap.data() as Omit<AppUser, "id">),
+              } as AppUser)
             : null,
         });
       },
@@ -533,8 +553,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       const c = (await getDoc(doc(db(), "codes", code))).data();
       if (!c) throw new Error("Código inválido. Confira com a recepção.");
       if (c.kind !== "family")
-        throw new Error("Esse é um código de equipe. Use o código da família (LK-…).");
-      if (c.churchId !== churchId) throw new Error("Esse código é de outra igreja.");
+        throw new Error(
+          "Esse é um código de equipe. Use o código da família (LK-…).",
+        );
+      if (c.churchId !== churchId)
+        throw new Error("Esse código é de outra igreja.");
       const link = (
         await getDoc(doc(db(), "tenants", churchId, "familyLinks", code))
       ).data();

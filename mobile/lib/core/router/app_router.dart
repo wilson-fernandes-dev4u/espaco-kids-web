@@ -11,6 +11,7 @@ import '../../features/auth/presentation/screens/signup_screen.dart';
 import '../../features/calls/presentation/screens/calls_screen.dart';
 import '../../features/checkin/presentation/screens/scan_screen.dart';
 import '../../features/calls/presentation/providers/calls_providers.dart';
+import '../../features/family/presentation/providers/news_providers.dart';
 import '../../features/family/presentation/screens/family_home_screen.dart';
 import '../../features/family/presentation/screens/care_form_screen.dart';
 import '../../features/family/presentation/screens/family_notices_screen.dart';
@@ -233,8 +234,10 @@ class _RoleShell extends ConsumerWidget {
                 .where((c) => c.open && c.status != 'visualizada')
                 .length
             : 0;
+    final news = family ? ref.watch(familyNewsTotalProvider) : 0;
     return AppScaffold(
-      badges: {'/avisos': openCalls},
+      // "Meus filhos": ocorrências e tarefas novas que ainda não foram abertas.
+      badges: {'/avisos': openCalls, '/familia': news},
       drawer: AppDrawer(destinations: [...tabs, _profileDestination]),
       destinations: tabs,
       currentIndex: i < 0 ? 0 : i,
