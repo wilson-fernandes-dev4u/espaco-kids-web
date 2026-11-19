@@ -14,6 +14,8 @@ import '../../data/tenant_repository.dart';
 import '../../domain/church_membership.dart';
 import '../providers/tenant_providers.dart';
 import '../widgets/church_logo.dart';
+import '../../../../shared/widgets/logo_loader.dart';
+import '../../../../shared/widgets/pattern_card.dart';
 
 /// Escolher a igreja ativa ou entrar noutra com um código. A mesma conta pode
 /// ter papéis diferentes em cada igreja (ex.: admin na sua e família numa
@@ -69,8 +71,7 @@ class ChurchSelectScreen extends ConsumerWidget {
           for (final m in memberships)
             Padding(
               padding: const EdgeInsets.only(bottom: AppSpacing.sm),
-              child: Card(
-                clipBehavior: Clip.antiAlias,
+              child: PatternCard(
                 child: ListTile(
                   contentPadding: const EdgeInsets.symmetric(
                     horizontal: AppSpacing.md,
@@ -281,11 +282,7 @@ class _JoinSheetState extends ConsumerState<_JoinSheet> {
             onPressed: _busy ? null : _submit,
             child:
                 _busy
-                    ? const SizedBox(
-                      height: 20,
-                      width: 20,
-                      child: CircularProgressIndicator(strokeWidth: 2),
-                    )
+                    ? LogoLoader(size: 28, light: true)
                     : Text(asksRole ? 'Entrar' : 'Continuar'),
           ),
         ],
@@ -413,11 +410,7 @@ class _CodeSheetState extends ConsumerState<_CodeSheet> {
             onPressed: _busy ? null : _submit,
             child:
                 _busy
-                    ? const SizedBox(
-                      height: 20,
-                      width: 20,
-                      child: CircularProgressIndicator(strokeWidth: 2),
-                    )
+                    ? LogoLoader(size: 28, light: true)
                     : Text(
                       widget.volunteer ? 'Entrar como voluntário' : 'Vincular',
                     ),

@@ -4,10 +4,18 @@ import 'package:flutter/material.dart';
 /// direito, usado nos cards do app para dar identidade visual sem depender
 /// de imagens.
 class PatternCard extends StatelessWidget {
-  const PatternCard({super.key, required this.child, this.margin});
+  const PatternCard({
+    super.key,
+    required this.child,
+    this.margin,
+    this.color,
+  });
 
   final Widget child;
   final EdgeInsetsGeometry? margin;
+
+  /// Cor de fundo do cartão (o padrão é a do tema).
+  final Color? color;
 
   @override
   Widget build(BuildContext context) {
@@ -15,6 +23,7 @@ class PatternCard extends StatelessWidget {
     final isDark = scheme.brightness == Brightness.dark;
 
     return Card(
+      color: color,
       margin: margin,
       clipBehavior: Clip.antiAlias,
       child: Stack(

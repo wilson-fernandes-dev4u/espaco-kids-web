@@ -9,6 +9,7 @@ import '../../../../shared/widgets/feedback.dart';
 import '../../../auth/presentation/providers/auth_providers.dart';
 import '../../../kids/domain/entities/classroom.dart';
 import '../../../kids/presentation/providers/kids_providers.dart';
+import '../../../../shared/widgets/pattern_card.dart';
 
 /// Faz o check-in da pessoa da equipe na sala (aparece para os pais como o
 /// professor da sala). Entrar noutra sala sai da anterior automaticamente.
@@ -68,7 +69,7 @@ Future<void> chooseCheckInMethod(BuildContext context, WidgetRef ref) async {
                   style: Theme.of(ctx).textTheme.titleLarge,
                 ),
                 const SizedBox(height: AppSpacing.sm),
-                Card(
+                PatternCard(
                   margin: const EdgeInsets.only(bottom: AppSpacing.sm),
                   child: ListTile(
                     leading: Icon(Icons.qr_code_scanner, color: scheme.primary),
@@ -80,7 +81,7 @@ Future<void> chooseCheckInMethod(BuildContext context, WidgetRef ref) async {
                     onTap: () => Navigator.pop(ctx, 'qr'),
                   ),
                 ),
-                Card(
+                PatternCard(
                   margin: EdgeInsets.zero,
                   child: ListTile(
                     leading: Icon(Icons.list_alt, color: scheme.primary),
@@ -186,7 +187,7 @@ class MyRoomCard extends ConsumerWidget {
     final inRoom = mine != null;
     final color = inRoom ? AppColors.success : scheme.primary;
 
-    return Card(
+    return PatternCard(
       margin: EdgeInsets.zero,
       child: Padding(
         padding: const EdgeInsets.all(AppSpacing.md),

@@ -10,6 +10,7 @@ import '../../../tenant/presentation/providers/tenant_providers.dart';
 import '../providers/auth_providers.dart';
 import '../widgets/auth_background.dart';
 import '../widgets/logo_header.dart';
+import '../../../../shared/widgets/logo_loader.dart';
 
 enum _Mode { family, staff }
 
@@ -189,13 +190,7 @@ class _CompleteSignupScreenState extends ConsumerState<CompleteSignupScreen> {
                           onPressed: _busy ? null : _submit,
                           child:
                               _busy
-                                  ? const SizedBox(
-                                    height: 20,
-                                    width: 20,
-                                    child: CircularProgressIndicator(
-                                      strokeWidth: 2,
-                                    ),
-                                  )
+                                  ? LogoLoader(size: 28, light: true)
                                   : const Text('Concluir cadastro'),
                         ),
                       ),

@@ -12,6 +12,8 @@ import '../../../auth/presentation/providers/auth_providers.dart';
 import '../../domain/entities/class_task.dart';
 import '../providers/tasks_providers.dart';
 import 'task_sheet.dart';
+import '../../../../shared/widgets/logo_loader.dart';
+import '../../../../shared/widgets/pattern_card.dart';
 
 /// Tarefas de uma turma. A família só lê; quem cria/edita é a coordenação/admin
 /// (qualquer turma) ou o professor da turma.
@@ -53,7 +55,7 @@ class TaskList extends ConsumerWidget {
           loading:
               () => const Padding(
                 padding: EdgeInsets.all(AppSpacing.lg),
-                child: Center(child: CircularProgressIndicator()),
+                child: Center(child: LogoLoader(size: 48)),
               ),
           error:
               (e, _) => const Padding(
@@ -110,7 +112,7 @@ class _TaskCard extends ConsumerWidget {
         due != null &&
         due.isBefore(DateTime(today.year, today.month, today.day));
 
-    return Card(
+    return PatternCard(
       child: Padding(
         padding: const EdgeInsets.all(AppSpacing.md),
         child: Column(

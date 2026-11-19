@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../shared/widgets/feedback.dart';
 import '../../../auth/presentation/providers/auth_providers.dart';
+import '../../../../shared/widgets/logo_loader.dart';
 
 /// Exclusão da própria conta (exigida pelas lojas): explica o que será
 /// apagado, pede a identidade de novo e chama o servidor.
@@ -126,11 +127,7 @@ class _DeleteAccountDialogState extends ConsumerState<_DeleteAccountDialog> {
           onPressed: _busy ? null : _submit,
           child:
               _busy
-                  ? const SizedBox(
-                    width: 18,
-                    height: 18,
-                    child: CircularProgressIndicator(strokeWidth: 2),
-                  )
+                  ? LogoLoader(size: 28, light: true)
                   : const Text('Excluir conta'),
         ),
       ],

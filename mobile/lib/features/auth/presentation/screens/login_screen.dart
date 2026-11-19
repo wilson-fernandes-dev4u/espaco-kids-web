@@ -10,6 +10,7 @@ import '../providers/auth_providers.dart';
 import '../widgets/auth_shell.dart';
 import '../widgets/last_used_badge.dart';
 import '../widgets/social_buttons.dart';
+import '../../../../shared/widgets/logo_loader.dart';
 
 const _lastEmailKey = 'last_login_email';
 
@@ -158,13 +159,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                     onPressed: _busy ? null : _submit,
                     child:
                         _busy
-                            ? const SizedBox(
-                              height: 22,
-                              width: 22,
-                              child: CircularProgressIndicator(
-                                strokeWidth: 2.5,
-                              ),
-                            )
+                            ? LogoLoader(size: 28, light: true)
                             : const Text(
                               'Entrar',
                               style: TextStyle(

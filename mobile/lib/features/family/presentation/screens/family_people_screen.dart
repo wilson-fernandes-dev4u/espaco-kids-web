@@ -17,6 +17,7 @@ import '../../../kids/domain/entities/child.dart';
 import '../../../kids/presentation/providers/kids_providers.dart';
 import '../providers/family_providers.dart';
 import '../widgets/person_form.dart';
+import '../../../../shared/widgets/pattern_card.dart';
 
 /// Responsáveis e pessoas autorizadas a buscar as crianças. A própria família
 /// inclui e remove pessoas aqui.
@@ -83,7 +84,7 @@ class FamilyPeopleScreen extends ConsumerWidget {
     WidgetRef ref,
     Person p,
     List<Child> kids,
-  ) => Card(
+  ) => PatternCard(
     margin: const EdgeInsets.only(bottom: AppSpacing.sm),
     child: ListTile(
       contentPadding: const EdgeInsets.fromLTRB(

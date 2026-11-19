@@ -9,6 +9,7 @@ import '../../../tenant/data/tenant_repository.dart';
 import '../../../tenant/presentation/providers/tenant_providers.dart';
 import '../widgets/auth_background.dart';
 import '../widgets/logo_header.dart';
+import '../../../../shared/widgets/logo_loader.dart';
 
 enum _Mode { family, staff }
 
@@ -216,13 +217,7 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
                           onPressed: _busy ? null : _submit,
                           child:
                               _busy
-                                  ? const SizedBox(
-                                    height: 20,
-                                    width: 20,
-                                    child: CircularProgressIndicator(
-                                      strokeWidth: 2,
-                                    ),
-                                  )
+                                  ? LogoLoader(size: 28, light: true)
                                   : const Text('Criar conta'),
                         ),
                       ),

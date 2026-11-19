@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../../../../core/theme/app_spacing.dart';
+import '../../../../shared/widgets/logo_mark.dart';
 
 /// Casca das telas de entrada: faixa de marca no topo (gradiente do tema,
 /// logo e nome) e, por cima dela, uma folha arredondada com o conteúdo.
@@ -66,32 +67,13 @@ class AuthShell extends StatelessWidget {
                             ),
                             Column(
                               children: [
-                                Container(
-                                  padding: const EdgeInsets.all(4),
-                                  decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius: BorderRadius.circular(26),
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color: Colors.black.withValues(
-                                          alpha: 0.18,
-                                        ),
-                                        blurRadius: 18,
-                                        offset: const Offset(0, 8),
-                                      ),
-                                    ],
-                                  ),
-                                  child: ClipRRect(
-                                    borderRadius: BorderRadius.circular(22),
-                                    child: Image.asset(
-                                      'assets/icon/ic_app.png',
-                                      width: 84,
-                                      height: 84,
-                                      fit: BoxFit.cover,
-                                    ),
-                                  ),
+                                // Os círculos ocupam só o miolo da grade da marca; cortar a
+                                // altura aproxima o logo do nome.
+                                const Align(
+                                  heightFactor: 0.66,
+                                  child: LogoMark(size: 96),
                                 ),
-                                const SizedBox(height: AppSpacing.md),
+                                const SizedBox(height: AppSpacing.sm),
                                 Text(
                                   'Espaço Kids',
                                   style: text.headlineMedium?.copyWith(

@@ -9,6 +9,7 @@ import '../../../auth/presentation/providers/auth_providers.dart';
 import '../../../kids/domain/entities/child.dart';
 import '../../data/family_repository.dart';
 import '../providers/family_providers.dart';
+import '../../../../shared/widgets/logo_loader.dart';
 
 /// Controladores e validação dos campos de uma criança.
 class ChildFormController {
@@ -258,11 +259,7 @@ class _ChildSheetState extends ConsumerState<_ChildSheet> {
                 onPressed: _busy ? null : _save,
                 child:
                     _busy
-                        ? const SizedBox(
-                          height: 20,
-                          width: 20,
-                          child: CircularProgressIndicator(strokeWidth: 2),
-                        )
+                        ? LogoLoader(size: 28, light: true)
                         : const Text('Salvar'),
               ),
             ],

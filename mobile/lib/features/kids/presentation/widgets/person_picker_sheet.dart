@@ -6,6 +6,7 @@ import '../../../../shared/widgets/person_avatar.dart';
 import '../../../../shared/widgets/status_badge.dart';
 import '../../domain/entities/person.dart';
 import '../providers/kids_providers.dart';
+import '../../../../shared/widgets/logo_loader.dart';
 
 /// Escolhe quem está entregando/retirando (responsáveis e autorizados).
 Future<Person?> pickPerson(
@@ -58,7 +59,7 @@ class _PersonPicker extends ConsumerWidget {
               loading:
                   () => const Padding(
                     padding: EdgeInsets.all(AppSpacing.lg),
-                    child: Center(child: CircularProgressIndicator()),
+                    child: Center(child: LogoLoader(size: 48)),
                   ),
               error:
                   (_, _) => const Text('Não foi possível carregar as pessoas.'),

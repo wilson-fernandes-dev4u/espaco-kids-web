@@ -7,6 +7,7 @@ import '../../../../shared/widgets/person_avatar.dart';
 import '../../../../shared/widgets/photo_field.dart';
 import '../../../auth/presentation/providers/auth_providers.dart';
 import '../providers/family_providers.dart';
+import '../../../../shared/widgets/pattern_card.dart';
 
 /// Cartão "Minha família": mostra o nome e a foto e deixa a família trocar os
 /// dois (a foto é opcional).
@@ -24,7 +25,7 @@ class FamilyProfileCard extends ConsumerWidget {
     final name = profile?.name ?? 'Minha família';
     final scheme = Theme.of(context).colorScheme;
 
-    return Card(
+    return PatternCard(
       margin: const EdgeInsets.only(bottom: AppSpacing.md),
       child: ListTile(
         contentPadding: const EdgeInsets.symmetric(

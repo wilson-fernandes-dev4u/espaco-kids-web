@@ -7,6 +7,7 @@ import '../../../../core/theme/app_spacing.dart';
 import '../../../../shared/widgets/feedback.dart';
 import '../../../auth/presentation/providers/auth_providers.dart';
 import '../providers/family_providers.dart';
+import '../../../../shared/widgets/pattern_card.dart';
 
 /// Código da família: quem o digita ao criar a conta (ou em "Vincular minha
 /// família") entra nesta mesma família, com os mesmos filhos.
@@ -60,7 +61,7 @@ class _FamilyCodeCardState extends ConsumerState<FamilyCodeCard> {
             .watch(familyCodeProvider((user.churchId, user.familyId ?? '')))
             .valueOrNull;
 
-    return Card(
+    return PatternCard(
       child: Padding(
         padding: const EdgeInsets.all(AppSpacing.md),
         child: Column(

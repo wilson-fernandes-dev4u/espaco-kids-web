@@ -11,6 +11,7 @@ import '../../../kids/presentation/providers/kids_providers.dart';
 import '../../domain/entities/incident.dart';
 import '../providers/incidents_providers.dart';
 import 'incident_sheet.dart';
+import '../../../../shared/widgets/pattern_card.dart';
 
 /// Cartão de uma ocorrência. Edita/remove quem registrou ou a coordenação.
 class IncidentTile extends ConsumerWidget {
@@ -43,7 +44,7 @@ class IncidentTile extends ConsumerWidget {
       if (!user.isFamily) ...i.involvedChildIds.map(name),
     ];
 
-    return Card(
+    return PatternCard(
       child: Padding(
         padding: const EdgeInsets.all(AppSpacing.md),
         child: Column(

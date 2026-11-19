@@ -10,6 +10,7 @@ import '../../../../shared/widgets/form_section_header.dart';
 import '../../../../shared/widgets/person_avatar.dart';
 import '../../../auth/presentation/providers/auth_providers.dart';
 import '../../../kids/presentation/providers/kids_providers.dart';
+import '../../../../shared/widgets/pattern_card.dart';
 
 /// QR da sala (`EKT:<igreja>:<turma>`) na tela, para a equipe ler no app.
 /// Para imprimir a etiqueta, use o painel web (Turmas e salas).
@@ -89,7 +90,7 @@ class TeamByRoom extends ConsumerWidget {
               '${staff.length} ${staff.length == 1 ? 'pessoa' : 'pessoas'} com check-in hoje.',
         ),
         const SizedBox(height: AppSpacing.sm),
-        Card(
+        PatternCard(
           margin: EdgeInsets.zero,
           child: Column(
             children: [

@@ -9,6 +9,8 @@ import '../../../kids/domain/entities/care_profile.dart';
 import '../../../kids/domain/entities/child.dart';
 import '../../../kids/presentation/providers/kids_providers.dart';
 import '../providers/family_providers.dart';
+import '../../../../shared/widgets/logo_loader.dart';
+import '../../../../shared/widgets/pattern_card.dart';
 
 /// Saúde e cuidados especiais de um filho, preenchido pela família.
 /// Tudo é opcional; a informação é vista só pela coordenação e pelo
@@ -215,11 +217,11 @@ class _CareFormScreenState extends ConsumerState<CareFormScreen> {
       ),
       body:
           !_loaded
-              ? const Center(child: CircularProgressIndicator())
+              ? const Center(child: LogoLoader(size: 48))
               : ListView(
                 padding: const EdgeInsets.all(AppSpacing.md),
                 children: [
-                  Card(
+                  PatternCard(
                     color: scheme.primaryContainer,
                     child: Padding(
                       padding: const EdgeInsets.all(AppSpacing.md),
@@ -374,11 +376,7 @@ class _CareFormScreenState extends ConsumerState<CareFormScreen> {
                     onPressed: _busy ? null : _save,
                     child:
                         _busy
-                            ? const SizedBox(
-                              height: 20,
-                              width: 20,
-                              child: CircularProgressIndicator(strokeWidth: 2),
-                            )
+                            ? LogoLoader(size: 28, light: true)
                             : const Text('Salvar'),
                   ),
                   const SizedBox(height: AppSpacing.lg),
@@ -389,7 +387,7 @@ class _CareFormScreenState extends ConsumerState<CareFormScreen> {
 
   Widget _medCard(int i) {
     final m = _meds[i];
-    return Card(
+    return PatternCard(
       margin: const EdgeInsets.only(bottom: AppSpacing.md),
       child: Padding(
         padding: const EdgeInsets.all(AppSpacing.md),

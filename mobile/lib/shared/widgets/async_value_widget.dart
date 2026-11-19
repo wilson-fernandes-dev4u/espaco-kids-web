@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../core/errors/error_message.dart';
 import 'empty_state.dart';
+import 'logo_loader.dart';
 
 /// Renderiza um [AsyncValue] do Riverpod com os três estados padrão
 /// (carregando / erro / dados), evitando repetir esse switch em cada tela.
@@ -29,7 +30,7 @@ class AsyncValueWidget<T> extends StatelessWidget {
         }
         return data(d);
       },
-      loading: () => const Center(child: CircularProgressIndicator()),
+      loading: () => const Center(child: LogoLoader(size: 48)),
       error:
           (error, stackTrace) => EmptyState(
             icon: Icons.error_outline,

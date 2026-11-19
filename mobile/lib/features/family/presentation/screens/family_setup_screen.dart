@@ -16,6 +16,8 @@ import '../../../tenant/presentation/providers/tenant_providers.dart';
 import '../widgets/family_code_card.dart';
 import '../widgets/import_family_sheet.dart';
 import '../widgets/person_form.dart';
+import '../../../../shared/widgets/logo_loader.dart';
+import '../../../../shared/widgets/pattern_card.dart';
 
 /// Primeiro acesso da família, em 4 passos curtos:
 /// 1. seus dados · 2. seus filhos · 3. quem pode buscar · 4. código da família.
@@ -229,7 +231,7 @@ class _FamilySetupScreenState extends ConsumerState<FamilySetupScreen> {
       ),
       const SizedBox(height: AppSpacing.md),
       for (final c in kids)
-        Card(
+        PatternCard(
           child: ListTile(
             leading: PersonAvatar(name: c.fullName, photo: c.photoUrl),
             title: Text(c.displayName),
@@ -313,11 +315,7 @@ class _FamilySetupScreenState extends ConsumerState<FamilySetupScreen> {
             onPressed: _busy ? null : _saveYou,
             child:
                 _busy
-                    ? const SizedBox(
-                      height: 20,
-                      width: 20,
-                      child: CircularProgressIndicator(strokeWidth: 2),
-                    )
+                    ? LogoLoader(size: 28, light: true)
                     : const Text('Continuar'),
           ),
         );

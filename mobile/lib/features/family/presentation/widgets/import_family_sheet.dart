@@ -9,6 +9,7 @@ import '../../../kids/domain/entities/child.dart';
 import '../../../tenant/domain/church_membership.dart';
 import '../../../tenant/presentation/providers/tenant_providers.dart';
 import '../providers/family_providers.dart';
+import '../../../../shared/widgets/logo_loader.dart';
 
 /// Outras igrejas em que a pessoa já tem família cadastrada.
 List<ChurchMembership> importableChurches(
@@ -142,7 +143,7 @@ class _ImportSheetState extends ConsumerState<_ImportSheet> {
             if (_from != null && _kids == null)
               const Padding(
                 padding: EdgeInsets.all(AppSpacing.md),
-                child: Center(child: CircularProgressIndicator()),
+                child: Center(child: LogoLoader(size: 48)),
               ),
             if (_kids != null) ...[
               const Divider(),
@@ -182,11 +183,7 @@ class _ImportSheetState extends ConsumerState<_ImportSheet> {
                   onPressed: _busy || _picked.isEmpty ? null : _import,
                   child:
                       _busy
-                          ? const SizedBox(
-                            height: 20,
-                            width: 20,
-                            child: CircularProgressIndicator(strokeWidth: 2),
-                          )
+                          ? LogoLoader(size: 28, light: true)
                           : const Text('Importar'),
                 ),
               ),

@@ -6,6 +6,7 @@ import '../../../../core/theme/app_spacing.dart';
 import '../../../../shared/widgets/feedback.dart';
 import '../../../../shared/widgets/form_section_header.dart';
 import '../../../auth/presentation/providers/auth_providers.dart';
+import '../../../../shared/widgets/pattern_card.dart';
 
 const _labels = {
   'password': 'E-mail e senha',
@@ -171,7 +172,7 @@ class _LinkedAccountsSectionState extends ConsumerState<LinkedAccountsSection> {
           description: 'Formas de entrar nesta mesma conta.',
         ),
         const SizedBox(height: AppSpacing.md),
-        Card(
+        PatternCard(
           child: Column(
             children: [
               for (final id in linked)
